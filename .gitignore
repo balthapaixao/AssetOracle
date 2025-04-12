@@ -1,0 +1,28 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+assetoracle-frontend/node_modules
+assetoracle-frontend/.pnp
+assetoracle-frontend/.pnp.js
+
+# testing
+*/coverage
+
+# production
+assetoracle-frontend/build
+
+# misc
+assetoracle-frontend/.DS_Store
+assetoracle-frontend/.env.local
+assetoracle-frontend/.env.development.local
+assetoracle-frontend/.env.test.local
+assetoracle-frontend/.env.production.local
+
+assetoracle-frontend/npm-debug.log*
+assetoracle-frontend/yarn-debug.log*
+assetoracle-frontend/yarn-error.log*
+
+# common files
+*.log
+*.env
+.envrc
