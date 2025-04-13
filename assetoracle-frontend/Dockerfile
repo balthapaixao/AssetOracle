@@ -2,11 +2,9 @@
 FROM node:18 as builder
 WORKDIR /app
 
-# Copy package files and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the application code and build
 COPY . .
 RUN npm run build
 
@@ -14,6 +12,5 @@ RUN npm run build
 FROM nginx:alpine
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Expose port 80 for Nginx
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

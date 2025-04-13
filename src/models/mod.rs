@@ -1,5 +1,5 @@
 use serde::{Serialize, Deserialize};
-use sqlx::types::time::Date;
+use chrono::NaiveDate;
 
 /// Represents an asset record from the database.
 #[derive(Debug, Serialize, Deserialize, sqlx::FromRow)]
@@ -9,10 +9,10 @@ pub struct CurrentPrice {
     pub current_price: f64,
 }
 
-pub struct 
-HistoricalPrice {
+#[derive(sqlx::FromRow, Serialize, Deserialize, Debug)]
+pub struct HistoricalPrice {
     pub id: i32,
     pub symbol: String,
-    pub date: Date, // Ensure this matches your database date format
     pub close_price: f64,
+    pub date: NaiveDate,
 }

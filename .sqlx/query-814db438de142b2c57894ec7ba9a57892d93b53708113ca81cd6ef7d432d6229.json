@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO ASSETS.HISTORICAL_PRICES (symbol, close_price, date) VALUES ($1, $2, $3)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Float8",
+        "Date"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "814db438de142b2c57894ec7ba9a57892d93b53708113ca81cd6ef7d432d6229"
+}

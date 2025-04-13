@@ -5,6 +5,7 @@ use derive_more::Display;
 
 
 #[derive(Debug, Display)]
+#[allow(dead_code)]
 pub enum AppError {
     #[display(fmt = "Database error")]
     DbError,

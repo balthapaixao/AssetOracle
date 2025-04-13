@@ -2,21 +2,26 @@
 FROM rust:1.81 as builder
 WORKDIR /app
 
-# Copy all project files (make sure sqlx-data.json is included)
+# Copy project files and dependencies
 COPY . .
 
-RUN apt-get update && apt-get install -y pkg-config libssl-dev
-# RUN cargo install sqlx-cli --no-default-features --features postgres
-# RUN cargo sqlx prepare -- --lib
-# Enable SQLx offline mode to use the offline manifest
-# ENV SQLX_OFFLINE=1
+# Install required libraries to compile (e.g., sqlx with openssl)
+RUN apt-get update && apt-get install -y pkg-config libssl-dev ca-certificates
 
+# Set SQLx offline mode
+ENV SQLX_OFFLINE=true
+
+# Build the release binary
 RUN cargo build --release
 
-
 # Stage 2: Minimal runtime image
-FROM debian:buster-slim
+FROM debian:bullseye-slim
+
+# ✅ Install runtime OpenSSL dependency
+RUN apt-get update && apt-get install -y libssl1.1 ca-certificates && apt-get clean
+
 WORKDIR /app
 COPY --from=builder /app/target/release/asset_oracle .
+
 EXPOSE 8080
 CMD ["./asset_oracle"]

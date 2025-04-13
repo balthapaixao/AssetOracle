@@ -12,6 +12,5 @@ pub fn init_routes(cfg: &mut web::ServiceConfig) {
             .service(simulate::simulate)
             .service(forecast::forecast)
             .service(assets::create_asset)
-            // You can register update and delete handlers here.
     );
 }
