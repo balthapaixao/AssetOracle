@@ -17,6 +17,10 @@ build:
 	@echo -e "$(GREEN)[AssetOracle] Building Docker images...$(RESET)"
 	docker-compose build
 
+build-frontend:
+	@echo -e "$(GREEN)[AssetOracle] Building Frontend Docker image...$(RESET)"
+	docker-compose build frontend
+
 up:
 	@echo -e "$(BLUE)[AssetOracle] Starting containers...$(RESET)"
 	docker-compose up -d
