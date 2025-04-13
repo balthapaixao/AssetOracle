@@ -1,7 +1,6 @@
 use actix_web::{HttpResponse, ResponseError};
 use derive_more::Display;
 // import NotFound and BadRequest
-use thiserror::Error;
 
 
 
