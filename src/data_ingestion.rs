@@ -1,6 +1,7 @@
 use reqwest;
 use serde_json::Value;
 use sqlx::PgPool;
+use chrono::NaiveDate;
 
 /// Fetch historical price data for the given symbol from Alpha Vantage.
 ///
@@ -35,15 +36,16 @@ pub async fn store_historical_data(pool: &PgPool, symbol: &str, api_key: &str) -
             .and_then(|v| v.as_str())
             .ok_or("Missing close price")?;
         let close_price: f64 = close_price_str.parse()?;
-
+        let date_parsed = NaiveDate::parse_from_str(date_str, "%Y-%m-%d")
+            .expect("Failed to parse date");
         sqlx::query!(
             r#"
-            INSERT INTO historical_prices (symbol, date, close_price)
+            INSERT INTO ASSETS.HISTORICAL_PRICES (symbol, date, close_price)
             VALUES ($1, $2, $3)
             ON CONFLICT (symbol, date) DO NOTHING
             "#,
             symbol,
-            date_str, // Ensure the date format matches your table definition.
+            date_parsed, // Ensure the date format matches your table definition.
             close_price
         )
         .execute(pool)

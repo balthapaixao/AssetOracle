@@ -10,7 +10,7 @@ pub struct NewAsset {
 }
 
 #[derive(Serialize)]
-pub struct AssetResponse {
+pub struct CurrentPriceResponse {
     pub id: i32,
     pub symbol: String,
     pub current_price: f64,
@@ -19,7 +19,7 @@ pub struct AssetResponse {
 #[post("/assets")]
 pub async fn create_asset(new_asset: web::Json<NewAsset>, pool: web::Data<PgPool>) -> impl Responder {
     let result = sqlx::query!(
-        "INSERT INTO assets (symbol, current_price) VALUES ($1, $2) RETURNING id",
+        "INSERT INTO ASSETS.CURRENT_PRICES (symbol, current_price) VALUES ($1, $2) RETURNING id",
         new_asset.symbol,
         new_asset.current_price
     )
@@ -28,7 +28,7 @@ pub async fn create_asset(new_asset: web::Json<NewAsset>, pool: web::Data<PgPool
 
     match result {
         Ok(record) => {
-            let response = AssetResponse {
+            let response = CurrentPriceResponse {
                 id: record.id,
                 symbol: new_asset.symbol.clone(),
                 current_price: new_asset.current_price,

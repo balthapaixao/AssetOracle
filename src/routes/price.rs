@@ -1,6 +1,6 @@
 use actix_web::{get, web, HttpResponse, Responder};
 use sqlx::PgPool;
-use crate::models::Asset;
+use crate::models::CurrentPrice;
 
 /// GET endpoint to retrieve the current price for a given asset symbol.
 /// Example: GET /api/price/AAPL
@@ -9,8 +9,8 @@ pub async fn get_price(symbol: web::Path<String>, db_pool: web::Data<PgPool>) ->
     let symbol = symbol.into_inner();
 
     // Query the database for the asset.
-    let result = sqlx::query_as::<_, Asset>(
-        "SELECT id, symbol, current_price FROM assets WHERE symbol = $1"
+    let result = sqlx::query_as::<_, CurrentPrice>(
+        "SELECT id, symbol, current_price FROM ASSETS.CURRENT_PRICES WHERE symbol = $1"
     )
     .bind(&symbol)
     .fetch_one(db_pool.get_ref())

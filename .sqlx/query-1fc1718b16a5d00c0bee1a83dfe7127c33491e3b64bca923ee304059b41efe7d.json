@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            INSERT INTO ASSETS.HISTORICAL_PRICES (symbol, date, close_price)\n            VALUES ($1, $2, $3)\n            ON CONFLICT (symbol, date) DO NOTHING\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Varchar",
+        "Date",
+        "Float8"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "1fc1718b16a5d00c0bee1a83dfe7127c33491e3b64bca923ee304059b41efe7d"
+}

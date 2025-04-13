@@ -7,7 +7,7 @@ COPY . .
 
 RUN apt-get update && apt-get install -y pkg-config libssl-dev
 # RUN cargo install sqlx-cli --no-default-features --features postgres
-RUN cargo sqlx prepare -- --lib
+# RUN cargo sqlx prepare -- --lib
 # Enable SQLx offline mode to use the offline manifest
 # ENV SQLX_OFFLINE=1
 

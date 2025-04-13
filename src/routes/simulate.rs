@@ -1,7 +1,7 @@
 use actix_web::{post, web, HttpResponse, Responder};
 use serde::Deserialize;
 use sqlx::PgPool;
-use crate::models::Asset;
+use crate::models::CurrentPrice;
 
 #[derive(Deserialize)]
 pub struct SimulationInput {
@@ -24,7 +24,7 @@ pub struct SimulationResult {
 /// }
 #[post("/simulate")]
 pub async fn simulate(input: web::Json<SimulationInput>, db_pool: web::Data<PgPool>) -> impl Responder {
-    let query = sqlx::query_as::<_, Asset>(
+    let query = sqlx::query_as::<_, CurrentPrice>(
         "SELECT id, symbol, current_price FROM assets WHERE symbol = $1"
     )
     .bind(&input.symbol)
